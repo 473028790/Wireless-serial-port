@@ -252,7 +252,7 @@ void can_Task(void const * argument)
 * @retval None
 */
 /* USER CODE END Header_vofa_Task */
-int cnt998;
+int cnt998=666;
 void vofa_Task(void const * argument)
 {
   /* USER CODE BEGIN vofa_Task */
