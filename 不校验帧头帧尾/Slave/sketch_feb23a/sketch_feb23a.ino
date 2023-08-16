@@ -2,7 +2,8 @@
 #include <espnow.h>
 
 uint8_t esp_HAVE_address[] = {0xAC, 0x0B, 0xFB, 0xE5, 0xD3, 0x97};
-uint8_t esp_NO_address[] = {0xB4, 0x8A, 0x0A, 0xE9, 0xAD, 0x81};
+uint8_t esp_NO_address[] = {0xE8, 0x68, 0xE7, 0xCA, 0xD3, 0xC2};
+
 //接收信息时的回调函数，每次接收信息会自动调用该函数
 uint8_t data_rc[50];
 void OnDataRecv(uint8_t * mac, uint8_t *incomingData, uint8_t len) 
@@ -33,39 +34,14 @@ void setup() {
 }
 
 uint8_t data_to_send ;
-uint8_t data[100];
-uint8_t data_now[100];
-int i=0;
-int data_long=0;
+uint8_t data[1];
 void loop() 
 {
     if (Serial.available() > 0) {
-        data[i]= Serial.read();
-        if(data[0]!=0x81)
-        {
-            i=0;
-         }
-         else
-         {
-             i++;
-             if(i>1 && data[i-1]==0X7E)
-             {
-                data_long=i-2;
-                //Serial.write(data[1]);
-                //Serial.write(data[2]);
-                
-                for(int a=1;a<data_long+1;a++)
-                {
-                  data_now[a-1]=data[a];
-                  if(a==data_long)
-                  {
-                      i=0;
-                   }
-                }
-                  esp_now_send(esp_NO_address, data_now, data_long);
-              }
-          }
-    }
+        data[0]= Serial.read();
+        esp_now_send(esp_NO_address, data, 1);
+        }
+
   }
   
 
